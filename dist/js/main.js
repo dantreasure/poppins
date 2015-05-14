@@ -11,8 +11,33 @@ sms.config(["$stateProvider", "$urlRouterProvider", "$locationProvider", functio
       templateUrl: "../partials/home.html",
       controller: "homeCtrl"
     })
+    .state('sms', {
+      url: "/sms",
+      templateUrl: "../partials/sms.html",
+      controller: "smsCtrl"
+    })
+    .state('class-cup', {
+      url: "/class-cup",
+      templateUrl: "../partials/class-cup.html",
+      controller: "classCupCtrl"
+    })
+    .state('directory', {
+      url: "/directory",
+      templateUrl: "../partials/directory.html",
+      controller: "directoryCtrl"
+    })
 
     $locationProvider.html5Mode({enabled: true, requireBase: false})
+}]);
+
+sms.controller('classCupCtrl', ['$scope', function($scope) {
+
+
+}]);
+
+sms.controller('directoryCtrl', ['$scope', function($scope) {
+
+
 }]);
 
 sms.controller('homeCtrl', ['$scope', function($scope) {
@@ -21,6 +46,11 @@ sms.controller('homeCtrl', ['$scope', function($scope) {
 }]);
 
 sms.controller('indexCtrl', ['$scope', '$location', function($scope) {
+
+}]);
+
+sms.controller('smsCtrl', ['$scope', function($scope) {
+
 
 }]);
 

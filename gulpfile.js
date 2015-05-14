@@ -24,10 +24,6 @@ gulp.task('html', function(){
     gulp.src(['src/partials/*.html']).pipe(livereload());
 });
 
-gulp.task('vendor', function(){
-    gulp.src('src/vendor/##/*').pipe(gulp.dest('dist/vendor'))
-});
-
 gulp.task('fonts', function() {
     gulp.src('src/fonts/**/*').pipe(gulp.dest('dist/fonts'))
 })
@@ -75,7 +71,7 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task('default', ['clean'], function() {
-    gulp.start('html', 'styles', 'scripts', 'images', 'fonts', 'vendor');
+    gulp.start('html', 'styles', 'scripts', 'images', 'fonts');
 });
 
 gulp.task('watch', function() {
@@ -88,8 +84,6 @@ gulp.task('watch', function() {
     gulp.watch('src/js/**/*.js', ['scripts']);
 
     gulp.watch('src/images/**/*', ['images']);
-
-    gulp.watch('src/vendor/**/*' ['vendor'])
 
     livereload.listen();
 

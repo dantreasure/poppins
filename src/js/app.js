@@ -24,6 +24,11 @@ sms.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       templateUrl: "../partials/directory.html",
       controller: "directoryCtrl"
     })
+    .state('admin', {
+      url: "/admin",
+      templateUrl: "../partials/admin.html",
+      controller: "adminCtrl"
+    })
 
     $locationProvider.html5Mode({enabled: true, requireBase: false})
 });

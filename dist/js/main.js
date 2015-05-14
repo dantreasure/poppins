@@ -26,8 +26,18 @@ sms.config(["$stateProvider", "$urlRouterProvider", "$locationProvider", functio
       templateUrl: "../partials/directory.html",
       controller: "directoryCtrl"
     })
+    .state('admin', {
+      url: "/admin",
+      templateUrl: "../partials/admin.html",
+      controller: "adminCtrl"
+    })
 
     $locationProvider.html5Mode({enabled: true, requireBase: false})
+}]);
+
+sms.controller('adminCtrl', ['$scope', function($scope) {
+
+
 }]);
 
 sms.controller('classCupCtrl', ['$scope', function($scope) {

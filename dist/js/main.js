@@ -36,7 +36,8 @@ sms.config(["$stateProvider", "$urlRouterProvider", "$locationProvider", functio
 }]);
 
 sms.controller('adminCtrl', ['$scope', function($scope) {
-
+	$scope.newStudent = {};
+	$scope.newStudent.name = 'dan'
 
 }]);
 

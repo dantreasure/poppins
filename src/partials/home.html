@@ -1,0 +1,11 @@
+<div class="nav-home">
+	<h2 class="grotesk-light-italic" ng-bind="messages[message]"></h2>
+
+	<footer>
+		<img src="img/arrow-l.png" ng-class="{ 'active': message > 0}" ng-click="previousQuote()"></img>
+		<p>
+			<span ng-bind="message + 1 "></span> / 5
+		</p>
+		<img src="img/arrow-r.png" ng-class="{ 'active': message < 4}" ng-click="nextQuote()"></img>
+	</footer>
+</div>

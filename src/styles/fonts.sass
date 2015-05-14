@@ -1,0 +1,15 @@
+@mixin font-face($style-name, $file, $family, $category:"")
+  $filepath: $file
+  @font-face
+    font-family: "#{$style-name}"
+    src: url($filepath)
+
+  %#{$style-name}
+    font:
+      @if $category != ""
+        family: "#{$style-name}", #{$category}
+      @else
+        family: "#{$style-name}"
+      weight: normal
+
+// @include font-face('Everson-mono', "../fonts/everson-mono.woff", 'arial', 'sans-serif')

@@ -1,73 +1,123 @@
 <div class="nav-admin container">
 	<div class="row">
-		<div class="col-lg-6">
+		<div class="col-lg-5">
 			<div class="well bs-component">
 				<form class="form-horizontal">
-			  <fieldset>
-			    <legend>Add a student</legend>
-		    	<div class="form-group">
-		    		<label for="name" class="col-lg-2 control-label">Name</label>
-			    	<div class="col-lg-10">
-			    		<input type="text" class="form-control" placeholder="Name" ng-model="newStudent.name">
+				  <fieldset>
+				    <legend>Add a student</legend>
+			    	<div class="form-group">
+			    		<label for="name" class="col-lg-2 control-label">Name</label>
+				    	<div class="col-lg-10">
+				    		<input type="text" class="form-control" placeholder="Name" ng-model="newStudent.name">
+				    	</div>
 			    	</div>
-		    	</div>
-		    	<div class="form-group">
-		    		<label for="profile" class="col-lg-2 control-label">Avatar</label>
-			    	<div class="col-lg-10">
-			    		<input type="text" class="form-control" placeholder="https://pbs.twimg.com/profile_images/..." ng-model="newStudent.avatar">
+			    	<div class="form-group">
+			    		<label for="profile" class="col-lg-2 control-label">Avatar</label>
+				    	<div class="col-lg-10">
+				    		<input type="text" class="form-control" placeholder="https://pbs.twimg.com/profile_images/..." ng-model="newStudent.avatar">
+				    	</div>
 			    	</div>
-		    	</div>
-			    <div class="form-group">
-			      <label for="inputEmail" class="col-lg-2 control-label">Email</label>
-			      <div class="col-lg-10">
-			        <input type="text" class="form-control" placeholder="Email" ng-model="newStudent.email">
-			      </div>
-			    </div>
-			    <div class="form-group">
-		    		<label for="profile" class="col-lg-2 control-label">Cell</label>
-			    	<div class="col-lg-10">
-			    		<input type="tel" class="form-control" placeholder="801-867-5309" ng-model="newStudent.phone">
+				    <div class="form-group">
+				      <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+				      <div class="col-lg-10">
+				        <input type="text" class="form-control" placeholder="Email" ng-model="newStudent.email">
+				      </div>
+				    </div>
+				    <div class="form-group">
+			    		<label for="profile" class="col-lg-2 control-label">Cell</label>
+				    	<div class="col-lg-10">
+				    		<input type="tel" class="form-control" placeholder="801-867-5309" ng-model="newStudent.phone">
+				    	</div>
 			    	</div>
-		    	</div>
-			    <div class="form-group">
-			      <label for="textArea" class="col-lg-2 control-label">Notes</label>
-			      <div class="col-lg-10">
-			        <textarea class="form-control" rows="3" ng-model="newStudent.notes"></textarea>
-			      </div>
-			    </div>
-			    <div class="form-group">
-			      <div class="col-lg-10 col-lg-offset-2">
-			        <button type="reset" class="btn btn-default">Cancel</button>
-			        <button type="submit" class="btn btn-primary" ng-click="addStudent()">Submit</button>
-			      </div>
-			    </div>
-			  </fieldset>
+				    <div class="form-group">
+				      <label for="textArea" class="col-lg-2 control-label">Notes</label>
+				      <div class="col-lg-10">
+				        <textarea class="form-control" rows="3" ng-model="newStudent.notes"></textarea>
+				      </div>
+				    </div>
+				    <div class="form-group">
+				      <div class="col-lg-10 col-lg-offset-2">
+				        <button type="reset" class="btn btn-default">Cancel</button>
+				        <button type="submit" class="btn btn-primary" ng-click="addStudent()">Submit</button>
+				      </div>
+				    </div>
+				  </fieldset>
+				</form>
 			</div>
-			</form>
 		</div>
-		<div class="col-lg-6">
+		<div class="col-lg-7">
 			<div class="well bs-component">
 				<legend>Find a student</legend>
 				<table class="table table-striped table-hover ">
 				  <thead>
 				    <tr>
-				      <th>#</th>
-				      <th>Column heading</th>
-				      <th>Column heading</th>
-				      <th>Column heading</th>
+				      <th>Name</th>
+				      <th>Email</th>
+				      <th></th>
 				    </tr>
 				  </thead>
 				  <tbody>
 				    <tr ng-repeat="student in students">
-				      <td ng-bind="student.name"></td>
-				      <td>Column content</td>
-				      <td>Column content</td>
-				      <td>Column content</td>
+				      <td ng-bind="student.name" ></td>
+				      <td><a href="mailto:{{student.email}}" ng-bind="student.email"></a></td>
+				      <td>
+				      	<div ng-controller="ModalCtrl">
+							    <script type="text/ng-template" id="myModalContent.html">
+							        <div class="modal-header">
+							            <h3 class="modal-title" ng-bind="student.name"></h3>
+							        </div>
+							        <div class="modal-body">
+						        		<form class="form-horizontal">
+										  		<fieldset>
+											    	<div class="form-group">
+											    		<label for="name" class="col-lg-2 control-label">Name</label>
+												    	<div class="col-lg-10">
+												    		<textarea class="form-control" rows="1" style="resize: none" ng-model="student.name">{{student.name}}</textarea>
+												    	</div>
+											    	</div>
+											    	<div class="form-group">
+											    		<label for="profile" class="col-lg-2 control-label">Avatar</label>
+												    	<div class="col-lg-10">
+												    		<textarea class="form-control" rows="2" style="resize: none" ng-model="student.avatar"></textarea>
+												    	</div>
+											    	</div>
+												    <div class="form-group">
+												      <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+												      <div class="col-lg-10">
+												        <textarea class="form-control" rows="1" style="resize: none" ng-model="student.email"></textarea>
+												      </div>
+												    </div>
+												    <div class="form-group">
+											    		<label for="profile" class="col-lg-2 control-label">Cell</label>
+												    	<div class="col-lg-10">
+												    		<textarea rows="1" class="form-control" ng-model="student.telephone" style="resize: none"></textarea>
+												    	</div>
+											    	</div>
+												    <div class="form-group">
+												      <label for="textArea" class="col-lg-2 control-label">Notes</label>
+												      <div class="col-lg-10">
+												        <textarea class="form-control" rows="3" ng-model="student.notes"></textarea>
+												      </div>
+												    </div>
+												  </fieldset>
+												</form>
+												<p>{{student}}</p>
+							        </div>
+							        <div class="modal-footer">
+							            <button class="btn btn-success" ng-click="save()">SAVE</button>
+							            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+							        </div>
+							    </script>
+
+							    <button type="button" class="btn btn-default btn-xs" ng-click="open('md', student)">EDIT</button>
+							    <button type="button" class="btn btn-danger btn-xs" ng-click="deleteStudent(student)">DELETE</button>
+								</div>
+				      </td>
 				    </tr>
 				  </tbody>
 				</table>
 			</div>
 		</div>
 	</div>
-	<p>{{newStudent}}</p>
+
 </div>

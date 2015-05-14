@@ -1,4 +1,4 @@
-var sms = angular.module('sms', ['ui.router', 'firebase']);
+var sms = angular.module('sms', ['ui.router', 'firebase', 'ui.bootstrap']);
 
 sms.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
   $urlRouterProvider.otherwise("/");

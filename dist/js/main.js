@@ -1,6 +1,6 @@
 (function(window, document, undefined) {
 'use strict';
-var sms = angular.module('sms', ['ui.router', 'firebase']);
+var sms = angular.module('sms', ['ui.router', 'firebase', 'ui.bootstrap']);
 
 sms.config(["$stateProvider", "$urlRouterProvider", "$locationProvider", function($stateProvider, $urlRouterProvider, $locationProvider) {
   $urlRouterProvider.otherwise("/");
@@ -36,9 +36,11 @@ sms.config(["$stateProvider", "$urlRouterProvider", "$locationProvider", functio
 }]);
 
 sms.controller('adminCtrl', ['$scope', 'students', function($scope, students) {
-
-
 	$scope.students = students;
+
+	$scope.deleteStudent = function(student){
+		$scope.students.$remove(student);
+	};
 
 	$scope.addStudent = function(){
 		$scope.students.$add({
@@ -65,7 +67,6 @@ sms.controller('adminCtrl', ['$scope', 'students', function($scope, students) {
   });
 
 	$scope.newStudent = {};
-	$scope.newStudent.name = 'dan'
 
 }]);
 
@@ -86,6 +87,48 @@ sms.controller('homeCtrl', ['$scope', function($scope) {
 
 sms.controller('indexCtrl', ['$scope', '$location', function($scope) {
 
+}]);
+
+sms.controller('ModalCtrl', ['$scope', '$modal',  function ($scope, $modal) {
+  $scope.items = ['item1', 'item2', 'item3'];
+
+  $scope.animationsEnabled = true;
+
+  $scope.open = function (size, student) {
+    $scope.student = student
+    var modalInstance = $modal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'myModalContent.html',
+      controller: 'ModalInstanceCtrl',
+      size: size,
+      resolve: {
+        student: function () {
+          return $scope.student;
+        }
+      }
+    });
+  };
+
+  $scope.toggleAnimation = function () {
+    $scope.animationsEnabled = !$scope.animationsEnabled;
+  };
+
+}]);
+
+sms.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'student', 'students', function ($scope, $modalInstance, student, students) {
+  $scope.studentsRef = students;
+  $scope.studentCopy = student;
+  $scope.student = student;
+
+  $scope.save = function(){
+    $scope.studentsRef.$save($scope.student);
+    $modalInstance.close();
+  };
+
+  $scope.cancel = function () {
+
+    $modalInstance.close();
+  };
 }]);
 
 sms.controller('smsCtrl', ['$scope', function($scope) {

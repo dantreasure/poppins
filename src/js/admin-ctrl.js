@@ -1,7 +1,9 @@
 sms.controller('adminCtrl', ['$scope', 'students', function($scope, students) {
-
-
 	$scope.students = students;
+
+	$scope.deleteStudent = function(student){
+		$scope.students.$remove(student);
+	};
 
 	$scope.addStudent = function(){
 		$scope.students.$add({
@@ -28,6 +30,5 @@ sms.controller('adminCtrl', ['$scope', 'students', function($scope, students) {
   });
 
 	$scope.newStudent = {};
-	$scope.newStudent.name = 'dan'
 
 }]);

@@ -9,10 +9,10 @@ sms.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       templateUrl: "../partials/home.html",
       controller: "homeCtrl"
     })
-    .state('sms', {
-      url: "/sms",
-      templateUrl: "../partials/sms.html",
-      controller: "smsCtrl"
+    .state('staff', {
+      url: "/staff",
+      templateUrl: "../partials/staff.html",
+      controller: "staffCtrl"
     })
     .state('class-cup', {
       url: "/class-cup",

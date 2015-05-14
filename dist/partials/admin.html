@@ -7,32 +7,64 @@
 				    <legend>Add a student</legend>
 			    	<div class="form-group">
 			    		<label for="name" class="col-lg-2 control-label">Name</label>
-				    	<div class="col-lg-10">
-				    		<input type="text" class="form-control" placeholder="Name" ng-model="newStudent.name">
+				    	<div class="col-lg-4">
+				    		<input type="text" class="form-control" placeholder="First Name" ng-model="newStudent.first_name" required>
+				    	</div>
+				    	<div class="col-lg-6">
+				    		<input type="text" class="form-control" placeholder="Last Name" ng-model="newStudent.last_name" required>
 				    	</div>
 			    	</div>
 			    	<div class="form-group">
+				      <label class="col-lg-2 control-label">Gender</label>
+				      <div class="col-lg-10">
+				        <div class="radio">
+				          <label>
+				            <input type="radio" ng-model="newStudent.gender" value="male" checked="">
+				            Male
+				          </label>
+				        </div>
+				        <div class="radio">
+				          <label>
+				            <input type="radio" ng-model="newStudent.gender" value="female" checked="">
+				            Female
+				          </label>
+				        </div>
+				      </div>
+				    </div>
+			    	<div class="form-group">
 			    		<label for="profile" class="col-lg-2 control-label">Avatar</label>
 				    	<div class="col-lg-10">
-				    		<input type="text" class="form-control" placeholder="https://pbs.twimg.com/profile_images/..." ng-model="newStudent.avatar">
+				    		<input type="text" class="form-control" placeholder="https://pbs.twimg.com/profile_images/..." ng-model="newStudent.avatar" required>
+				    	</div>
+			    	</div>
+			    	<div class="form-group">
+			    		<label for="profile" class="col-lg-2 control-label">Cohort</label>
+				    	<div class="col-lg-10">
+				    		<input type="text" class="form-control" placeholder="Full Stack" ng-model="newStudent.cohort" required>
+				    	</div>
+			    	</div>
+			    	<div class="form-group">
+			    		<label for="profile" class="col-lg-2 control-label">City</label>
+				    	<div class="col-lg-10">
+				    		<input type="text" class="form-control" placeholder="Salt Lake City" ng-model="newStudent.current_city" required>
 				    	</div>
 			    	</div>
 				    <div class="form-group">
 				      <label for="inputEmail" class="col-lg-2 control-label">Email</label>
 				      <div class="col-lg-10">
-				        <input type="text" class="form-control" placeholder="Email" ng-model="newStudent.email">
+				        <input type="text" class="form-control" placeholder="Email" ng-model="newStudent.email" required>
 				      </div>
 				    </div>
 				    <div class="form-group">
 			    		<label for="profile" class="col-lg-2 control-label">Cell</label>
 				    	<div class="col-lg-10">
-				    		<input type="tel" class="form-control" placeholder="801-867-5309" ng-model="newStudent.phone">
+				    		<input type="tel" class="form-control" placeholder="801-867-5309" ng-model="newStudent.phone" required>
 				    	</div>
 			    	</div>
 				    <div class="form-group">
 				      <label for="textArea" class="col-lg-2 control-label">Notes</label>
 				      <div class="col-lg-10">
-				        <textarea class="form-control" rows="3" ng-model="newStudent.notes"></textarea>
+				        <textarea class="form-control" rows="3" ng-model="newStudent.notes" required></textarea>
 				      </div>
 				    </div>
 				    <div class="form-group">
@@ -58,7 +90,7 @@
 				  </thead>
 				  <tbody>
 				    <tr ng-repeat="student in students">
-				      <td ng-bind="student.name" ></td>
+				      <td ng-bind="student.first_name + ' ' + student.last_name" ></td>
 				      <td><a href="mailto:{{student.email}}" ng-bind="student.email"></a></td>
 				      <td>
 				      	<div ng-controller="ModalCtrl">
@@ -71,41 +103,71 @@
 										  		<fieldset>
 											    	<div class="form-group">
 											    		<label for="name" class="col-lg-2 control-label">Name</label>
-												    	<div class="col-lg-10">
-												    		<textarea class="form-control" rows="1" style="resize: none" ng-model="student.name">{{student.name}}</textarea>
+												    	<div class="col-lg-4">
+												    		<input type="text" class="form-control" placeholder="First Name" ng-model="student.first_name" required>
+												    	</div>
+												    	<div class="col-lg-6">
+												    		<input type="text" class="form-control" placeholder="Last Name" ng-model="student.last_name" required>
 												    	</div>
 											    	</div>
 											    	<div class="form-group">
+												      <label class="col-lg-2 control-label">Gender</label>
+												      <div class="col-lg-10">
+												        <div class="radio">
+												          <label>
+												            <input type="radio" ng-model="student.gender" value="male" checked="">
+												            Male
+												          </label>
+												        </div>
+												        <div class="radio">
+												          <label>
+												            <input type="radio" ng-model="student.gender" value="female" checked="">
+												            Female
+												          </label>
+												        </div>
+												      </div>
+												    </div>
+												    <div class="form-group">
+										    		<label for="profile" class="col-lg-2 control-label">Cohort</label>
+											    	<div class="col-lg-10">
+											    		<input type="text" class="form-control" placeholder="Full Stack" ng-model="student.cohort" required>
+											    	</div>
+										    	</div>
+											    	<div class="form-group">
 											    		<label for="profile" class="col-lg-2 control-label">Avatar</label>
 												    	<div class="col-lg-10">
-												    		<textarea class="form-control" rows="2" style="resize: none" ng-model="student.avatar"></textarea>
+												    		<input type="text" class="form-control" placeholder="https://pbs.twimg.com/profile_images/..." ng-model="student.avatar" required>
+												    	</div>
+											    	</div>
+											    	<div class="form-group">
+											    		<label for="profile" class="col-lg-2 control-label">City</label>
+												    	<div class="col-lg-10">
+												    		<input type="text" class="form-control" placeholder="Salt Lake City" ng-model="student.current_city" required>
 												    	</div>
 											    	</div>
 												    <div class="form-group">
 												      <label for="inputEmail" class="col-lg-2 control-label">Email</label>
 												      <div class="col-lg-10">
-												        <textarea class="form-control" rows="1" style="resize: none" ng-model="student.email"></textarea>
+												        <input type="text" class="form-control" placeholder="Email" ng-model="student.email" required>
 												      </div>
 												    </div>
 												    <div class="form-group">
 											    		<label for="profile" class="col-lg-2 control-label">Cell</label>
 												    	<div class="col-lg-10">
-												    		<textarea rows="1" class="form-control" ng-model="student.telephone" style="resize: none"></textarea>
+												    		<input type="tel" class="form-control" placeholder="801-867-5309" ng-model="student.phone" required>
 												    	</div>
 											    	</div>
 												    <div class="form-group">
 												      <label for="textArea" class="col-lg-2 control-label">Notes</label>
 												      <div class="col-lg-10">
-												        <textarea class="form-control" rows="3" ng-model="student.notes"></textarea>
+												        <textarea class="form-control" rows="3" ng-model="student.notes" required></textarea>
 												      </div>
 												    </div>
 												  </fieldset>
 												</form>
-												<p>{{student}}</p>
 							        </div>
 							        <div class="modal-footer">
 							            <button class="btn btn-success" ng-click="save()">SAVE</button>
-							            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 							        </div>
 							    </script>
 

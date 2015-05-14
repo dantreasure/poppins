@@ -11,10 +11,10 @@ sms.config(["$stateProvider", "$urlRouterProvider", "$locationProvider", functio
       templateUrl: "../partials/home.html",
       controller: "homeCtrl"
     })
-    .state('sms', {
-      url: "/sms",
-      templateUrl: "../partials/sms.html",
-      controller: "smsCtrl"
+    .state('staff', {
+      url: "/staff",
+      templateUrl: "../partials/staff.html",
+      controller: "staffCtrl"
     })
     .state('class-cup', {
       url: "/class-cup",
@@ -44,11 +44,17 @@ sms.controller('adminCtrl', ['$scope', 'students', function($scope, students) {
 
 	$scope.addStudent = function(){
 		$scope.students.$add({
-      name: $scope.newStudent.name,
+      first_name: $scope.newStudent.first_name,
+      last_name: $scope.newStudent.last_name,
+      cohort: $scope.newStudent.cohort,
       avatar: $scope.newStudent.avatar,
-      telephone: $scope.newStudent.phone,
+      phone: $scope.newStudent.phone,
+      gender: $scope.newStudent.gender,
+      current_city: $scope.newStudent.current_city,
       email: $scope.newStudent.email,
-      notes: $scope.newStudent.notes
+      notes: $scope.newStudent.notes,
+      log: [{'created': Date.now(), 'body': 'Student added to Poppins.', 'author': 'Mary &#10163;'}],
+      hearts: [{'logged': Date.now(), 'value': 3, 'author': 'Mary &#10163;'}]
     });
 
     $scope.newStudent= {};
@@ -66,7 +72,9 @@ sms.controller('adminCtrl', ['$scope', 'students', function($scope, students) {
     }
   });
 
-	$scope.newStudent = {};
+	$scope.newStudent = {
+		gender: ''
+	};
 
 }]);
 
@@ -117,21 +125,21 @@ sms.controller('ModalCtrl', ['$scope', '$modal',  function ($scope, $modal) {
 
 sms.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'student', 'students', function ($scope, $modalInstance, student, students) {
   $scope.studentsRef = students;
-  $scope.studentCopy = student;
+  $scope.copy = {};
   $scope.student = student;
-
+  angular.extend($scope.copy, $scope.student);
   $scope.save = function(){
     $scope.studentsRef.$save($scope.student);
     $modalInstance.close();
   };
 
   $scope.cancel = function () {
-
+    $scope.studentsRef.$save($scope.copy);
     $modalInstance.close();
   };
 }]);
 
-sms.controller('smsCtrl', ['$scope', function($scope) {
+sms.controller('staffCtrl', ['$scope', function($scope) {
 
 
 }]);

@@ -1,5 +1,7 @@
 .nav-admin td {
   font-size: 14px; }
+.nav-admin .radio, .nav-admin .checkbox {
+  display: inline-block; }
 
 
 

@@ -7,11 +7,17 @@ sms.controller('adminCtrl', ['$scope', 'students', function($scope, students) {
 
 	$scope.addStudent = function(){
 		$scope.students.$add({
-      name: $scope.newStudent.name,
+      first_name: $scope.newStudent.first_name,
+      last_name: $scope.newStudent.last_name,
+      cohort: $scope.newStudent.cohort,
       avatar: $scope.newStudent.avatar,
-      telephone: $scope.newStudent.phone,
+      phone: $scope.newStudent.phone,
+      gender: $scope.newStudent.gender,
+      current_city: $scope.newStudent.current_city,
       email: $scope.newStudent.email,
-      notes: $scope.newStudent.notes
+      notes: $scope.newStudent.notes,
+      log: [{'created': Date.now(), 'body': 'Student added to Poppins.', 'author': 'Mary &#10163;'}],
+      hearts: [{'logged': Date.now(), 'value': 3, 'author': 'Mary &#10163;'}]
     });
 
     $scope.newStudent= {};
@@ -29,6 +35,8 @@ sms.controller('adminCtrl', ['$scope', 'students', function($scope, students) {
     }
   });
 
-	$scope.newStudent = {};
+	$scope.newStudent = {
+		gender: ''
+	};
 
 }]);

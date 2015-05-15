@@ -1,6 +1,6 @@
 (function(window, document, undefined) {
 'use strict';
-var sms = angular.module('sms', ['ui.router', 'firebase', 'ui.bootstrap', 'angular-chartist', 'angularMoment']);
+var sms = angular.module('sms', ['ui.router', 'firebase', 'ui.bootstrap', 'angular-chartist', 'angularMoment', 'ngCookies']);
 
 sms.config(["$stateProvider", "$urlRouterProvider", "$locationProvider", function($stateProvider, $urlRouterProvider, $locationProvider) {
   $urlRouterProvider.otherwise("/");
@@ -35,8 +35,21 @@ sms.config(["$stateProvider", "$urlRouterProvider", "$locationProvider", functio
     $locationProvider.html5Mode({enabled: true, requireBase: false})
 }]);
 
-sms.controller('adminCtrl', ['$scope', 'students', function($scope, students) {
+sms.controller('adminCtrl', ['$scope', 'students', 'poppins', function($scope, students, poppins) {
 	$scope.students = students.getStudents();
+  $scope.poppins = poppins;
+
+  $scope.newChallenge = '';
+
+  $scope.cancelChallenge = function(){
+    $scope.newChallenge = '';
+  };
+
+  $scope.submitChallenge = function () {
+    $scope.poppins.dailyChallenge.question = $scope.newChallenge;
+    $scope.poppins.$save;
+    $scope.cancelChallenge();
+  };
 
 	$scope.deleteStudent = function(student){
 		$scope.students.$remove(student);
@@ -90,9 +103,8 @@ sms.controller('directoryCtrl', ['$scope', function($scope) {
 
 }]);
 
-sms.controller('homeCtrl', ['$scope', function($scope) {
-
-
+sms.controller('homeCtrl', ['$scope', 'poppins', function($scope, poppins) {
+	$scope.poppins = poppins;
 }]);
 
 sms.controller('indexCtrl', ['$scope', '$location', function($scope) {
@@ -137,6 +149,14 @@ sms.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'student', 'stu
     $scope.studentsRef.$save($scope.copy);
     $modalInstance.close();
   };
+}]);
+
+sms.factory("poppins", ["$firebaseObject",
+  function($firebaseObject) {
+    var ref = new Firebase("https://poppins.firebaseio.com/");
+
+    return $firebaseObject(ref);
+
 }]);
 
 sms.controller('RatingCtrl', ['$scope', 'students', function ($scope, students) {
@@ -336,5 +356,32 @@ sms.factory("students", ["$firebaseArray", "$firebaseObject",
     return students;
   }
 ]);
+
+sms.controller('WelcomeModalCtrl', ['$scope', '$modal', '$cookies', function ($scope, $modal, $cookies) {
+  $scope.animationsEnabled = true;
+
+  var welcomeCookie = $cookies.welcomed;
+  // welcomeCookie = false;
+  if (welcomeCookie === false){
+    var modalInstance = $modal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'welcomeModal.html',
+      controller: 'WelcomeModalInstanceCtrl',
+      size: 'lg',
+    });
+  }
+
+  $scope.toggleAnimation = function () {
+    $scope.animationsEnabled = !$scope.animationsEnabled;
+  };
+
+}]);
+
+sms.controller('WelcomeModalInstanceCtrl', ['$scope', '$modalInstance', '$cookies', function ($scope, $modalInstance, $cookies) {
+	$scope.close = function(){
+		$cookies.welcomed = true;
+		$modalInstance.close();
+	};
+}]);
 
 })(window, document);

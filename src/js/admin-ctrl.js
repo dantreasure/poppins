@@ -1,5 +1,18 @@
-sms.controller('adminCtrl', ['$scope', 'students', function($scope, students) {
+sms.controller('adminCtrl', ['$scope', 'students', 'poppins', function($scope, students, poppins) {
 	$scope.students = students.getStudents();
+  $scope.poppins = poppins;
+
+  $scope.newChallenge = '';
+
+  $scope.cancelChallenge = function(){
+    $scope.newChallenge = '';
+  };
+
+  $scope.submitChallenge = function () {
+    $scope.poppins.dailyChallenge.question = $scope.newChallenge;
+    $scope.poppins.$save;
+    $scope.cancelChallenge();
+  };
 
 	$scope.deleteStudent = function(student){
 		$scope.students.$remove(student);

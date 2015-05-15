@@ -15,3 +15,16 @@ body {
 
 .main-view {
   height: 100%; }
+
+img.profile {
+  border-radius: 3px; }
+
+.panel-title {
+  display: inline-block; }
+
+.label {
+  font-size: 100%;
+  float: right; }
+
+.rating-container i {
+  color: #ff4136; }

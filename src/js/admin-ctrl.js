@@ -1,5 +1,5 @@
 sms.controller('adminCtrl', ['$scope', 'students', function($scope, students) {
-	$scope.students = students;
+	$scope.students = students.getStudents();
 
 	$scope.deleteStudent = function(student){
 		$scope.students.$remove(student);
@@ -9,6 +9,8 @@ sms.controller('adminCtrl', ['$scope', 'students', function($scope, students) {
 		$scope.students.$add({
       first_name: $scope.newStudent.first_name,
       last_name: $scope.newStudent.last_name,
+      full_name: $scope.newStudent.first_name + ' ' + $scope.newStudent.last_name,
+      mentor: $scope.newStudent.mentor,
       cohort: $scope.newStudent.cohort,
       avatar: $scope.newStudent.avatar,
       phone: $scope.newStudent.phone,

@@ -1,5 +1,5 @@
 sms.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'student', 'students', function ($scope, $modalInstance, student, students) {
-  $scope.studentsRef = students;
+  $scope.studentsRef = students.getStudents();
   $scope.copy = {};
   $scope.student = student;
   angular.extend($scope.copy, $scope.student);

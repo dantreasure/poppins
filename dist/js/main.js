@@ -36,7 +36,7 @@ sms.config(["$stateProvider", "$urlRouterProvider", "$locationProvider", functio
 }]);
 
 sms.controller('adminCtrl', ['$scope', 'students', function($scope, students) {
-	$scope.students = students;
+	$scope.students = students.getStudents();
 
 	$scope.deleteStudent = function(student){
 		$scope.students.$remove(student);
@@ -46,6 +46,8 @@ sms.controller('adminCtrl', ['$scope', 'students', function($scope, students) {
 		$scope.students.$add({
       first_name: $scope.newStudent.first_name,
       last_name: $scope.newStudent.last_name,
+      full_name: $scope.newStudent.first_name + ' ' + $scope.newStudent.last_name,
+      mentor: $scope.newStudent.mentor,
       cohort: $scope.newStudent.cohort,
       avatar: $scope.newStudent.avatar,
       phone: $scope.newStudent.phone,
@@ -124,7 +126,7 @@ sms.controller('ModalCtrl', ['$scope', '$modal',  function ($scope, $modal) {
 }]);
 
 sms.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'student', 'students', function ($scope, $modalInstance, student, students) {
-  $scope.studentsRef = students;
+  $scope.studentsRef = students.getStudents();
   $scope.copy = {};
   $scope.student = student;
   angular.extend($scope.copy, $scope.student);
@@ -139,16 +141,62 @@ sms.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'student', 'stu
   };
 }]);
 
-sms.controller('staffCtrl', ['$scope', function($scope) {
+sms.controller('RatingCtrl', ['$scope', 'students', function ($scope, students) {
+  $scope.studentsRef = students.getStudents();
 
+  $scope.isReadonly = false;
+  $scope.activeRating;
+
+  $scope.onLeave = function(){
+    $scope.activeRating = '';
+  };
+
+  $scope.hoveringOver = function(value) {
+    $scope.activeRating = value;
+  };
+
+  $scope.logRating = function(student) {
+    var heartData = {
+      value: $scope.activeRating,
+      logged: Date.now(),
+      author: "Mary"
+    }
+    students.logHeart(student.$id, heartData)
+  };
+}]);
+
+sms.controller('staffCtrl', ['$scope', 'students', function($scope, students) {
+	$scope.students = students.getStudents();
 
 }]);
 
-sms.factory("students", ["$firebaseArray",
-  function($firebaseArray) {
+sms.factory("students", ["$firebaseArray", "$firebaseObject",
+  function($firebaseArray, $firebaseObject) {
     var ref = new Firebase("https://student-management.firebaseio.com/");
+    var students = {};
 
-    return $firebaseArray(ref);
+    students.getStudents = function(){
+    	return $firebaseArray(ref);
+    };
+
+    students.getHearts = function(refrnc){
+    	var studentRef = new Firebase("https://student-management.firebaseio.com/" + refrnc + "/hearts")
+    	var studentHearts = $firebaseArray(studentRef);
+    	return studentHearts
+    };
+
+    students.logHeart = function(refrnc, heartData){
+    	var studentHeartsRef = new Firebase("https://student-management.firebaseio.com/" + refrnc + "/hearts")
+    	var studentRef = new Firebase("https://student-management.firebaseio.com/" + refrnc)
+
+    	var studentHearts = $firebaseArray(studentHeartsRef);
+
+    	studentHearts.$add(heartData);
+
+  		studentRef.child('current_heart').set(heartData)
+    };
+
+    return students;
   }
 ]);
 

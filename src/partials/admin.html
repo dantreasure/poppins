@@ -1,4 +1,5 @@
 <div class="nav-admin container">
+	<h1>admin</h1>
 	<div class="row">
 		<div class="col-lg-5">
 			<div class="well bs-component">
@@ -38,11 +39,25 @@
 				    	</div>
 			    	</div>
 			    	<div class="form-group">
-			    		<label for="profile" class="col-lg-2 control-label">Cohort</label>
-				    	<div class="col-lg-10">
-				    		<input type="text" class="form-control" placeholder="Full Stack" ng-model="newStudent.cohort" required>
-				    	</div>
-			    	</div>
+				      <label for="select" class="col-lg-2 control-label">Cohort</label>
+				      <div class="col-lg-10">
+				        <select class="form-control" id="select" ng-model="newStudent.cohort">
+				          <option>Summer Front End 2015</option>
+				          <option>Summer Full Stack 2015</option>
+				        </select>
+				      </div>
+				    </div>
+			    	<div class="form-group">
+				      <label for="select" class="col-lg-2 control-label">Mentor</label>
+				      <div class="col-lg-10">
+				        <select class="form-control" id="select" ng-model="newStudent.mentor">
+				          <option>Lia</option>
+				          <option>Marc</option>
+				          <option>Alex</option>
+				          <option>Rachel</option>
+				        </select>
+				      </div>
+				    </div>
 			    	<div class="form-group">
 			    		<label for="profile" class="col-lg-2 control-label">City</label>
 				    	<div class="col-lg-10">
@@ -128,11 +143,25 @@
 												      </div>
 												    </div>
 												    <div class="form-group">
-										    		<label for="profile" class="col-lg-2 control-label">Cohort</label>
-											    	<div class="col-lg-10">
-											    		<input type="text" class="form-control" placeholder="Full Stack" ng-model="student.cohort" required>
-											    	</div>
-										    	</div>
+												      <label for="select" class="col-lg-2 control-label">Cohort</label>
+												      <div class="col-lg-10">
+												        <select class="form-control" id="select" ng-model="student.cohort">
+												          <option>Summer Front End 2015</option>
+												          <option>Summer Full Stack 2015</option>
+												        </select>
+												      </div>
+												    </div>
+											    	<div class="form-group">
+												      <label for="select" class="col-lg-2 control-label">Mentor</label>
+												      <div class="col-lg-10">
+												        <select class="form-control" id="select" ng-model="student.mentor">
+												          <option>Lia</option>
+												          <option>Marc</option>
+												          <option>Alex</option>
+												          <option>Rachel</option>
+												        </select>
+												      </div>
+												    </div>
 											    	<div class="form-group">
 											    		<label for="profile" class="col-lg-2 control-label">Avatar</label>
 												    	<div class="col-lg-10">

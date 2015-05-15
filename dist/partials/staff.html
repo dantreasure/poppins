@@ -1,6 +1,6 @@
 <div class="nav-staff container">
 	<div class="row">
-		<div class="col-lg-12 col-md-12 col-sm-9">
+		<div class="col-lg-12 col-md-12 col-sm-12">
 			<h1 class="title">staff</h1>
 			<div class="btn-group btn-group filters">
 			  <a ng-click="setOrder('current_heart.value')" class="btn btn-default" ng-class="{ 'btn-primary': ordering === 'current_heart.value', 'btn-info': ordering === '-current_heart.value' }">Health</a>
@@ -14,6 +14,7 @@
 		        <li><a ng-click="setMentor('Lia')">Lia</a></li>
 		        <li><a ng-click="setMentor('Alex')">Alex</a></li>
 		        <li><a ng-click="setMentor('Rachel')">Rachel</a></li>
+		        <li><a ng-click="setMentor('Marc')">Marc</a></li>
 		        <hr />
 		        <li><a ng-click="setMentor('')">Clear</a></li>
 		       </ul>
@@ -22,7 +23,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-lg-3 col-md-6 col-sm-9" ng-repeat="student in students | orderBy: ordering | filter: filtering">
+		<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12" ng-repeat="student in students | orderBy: ordering | filter: filtering">
 			<div class="panel" ng-class="{ 'panel-danger' : student.current_heart.value == 1, 'panel-warning': student.current_heart.value == 2, 'panel-primary': student.current_heart.value == 3, 'panel-success': student.current_heart.value > 3}">
 			  <div class="panel-heading">
 			    <h3 class="panel-title" ng-bind="student.full_name"></h3>
@@ -38,7 +39,29 @@
 						    <rating ng-model="student.current_heart.value" max="5" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="onLeave()" state-on="'glyphicon-heart'" state-off="'glyphicon-heart-empty'" ng-click="logRating(student)"></rating>
 							</div>
 							<p style="margin-bottom: 0px">Logged: {{student.current_heart.logged | date:'MMM d'}}</p>
-							<a class="btn btn-default btn-sm btn-block">REPORT</a>
+							<div ng-controller="ReportModalCtrl">
+							    <script type="text/ng-template" id="reportModal.html">
+						        <div class="modal-header">
+						            <div class="row">
+													<div class="col-lg-12 col-md-12 col-sm-12">
+														<h1 class="title" ng-bind="student.full_name"></h1>
+														<div class="btn-group btn-group filters">
+														  <a ng-click="setRange(7)" class="btn btn-default" ng-class="{ 'btn-primary': range === 7 }">Week</a>
+														  <a ng-click="setRange(31)" class="btn btn-default" ng-class="{ 'btn-primary': range === 31 }">Month</a>
+														  <a ng-click="setRange(90)" class="btn btn-default" ng-class="{ 'btn-primary': range === 90 }">Semester</a>
+														</div>
+													</div>
+												</div>
+						        </div>
+						        <div class="modal-body">
+					        		<chartist class="ct-chart ct-golden-section" chartist-data="lineData" chartist-chart-type="Line" chartist-chart-options="lineOptions" chartist-events="events"></chartist>
+						        </div>
+						        <div class="modal-footer">
+
+						        </div>
+						    	</script>
+								<a class="btn btn-default btn-sm btn-block" ng-click="open('lg', student)">REPORT</a>
+							</div>
 				    </section>
 			    </div>
 			  </div>

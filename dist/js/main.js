@@ -1,6 +1,6 @@
 (function(window, document, undefined) {
 'use strict';
-var sms = angular.module('sms', ['ui.router', 'firebase', 'ui.bootstrap']);
+var sms = angular.module('sms', ['ui.router', 'firebase', 'ui.bootstrap', 'angular-chartist', 'angularMoment']);
 
 sms.config(["$stateProvider", "$urlRouterProvider", "$locationProvider", function($stateProvider, $urlRouterProvider, $locationProvider) {
   $urlRouterProvider.otherwise("/");
@@ -100,8 +100,6 @@ sms.controller('indexCtrl', ['$scope', '$location', function($scope) {
 }]);
 
 sms.controller('ModalCtrl', ['$scope', '$modal',  function ($scope, $modal) {
-  $scope.items = ['item1', 'item2', 'item3'];
-
   $scope.animationsEnabled = true;
 
   $scope.open = function (size, student) {
@@ -127,9 +125,9 @@ sms.controller('ModalCtrl', ['$scope', '$modal',  function ($scope, $modal) {
 
 sms.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'student', 'students', function ($scope, $modalInstance, student, students) {
   $scope.studentsRef = students.getStudents();
-  $scope.copy = {};
+
   $scope.student = student;
-  angular.extend($scope.copy, $scope.student);
+
   $scope.save = function(){
     $scope.studentsRef.$save($scope.student);
     $modalInstance.close();
@@ -165,35 +163,108 @@ sms.controller('RatingCtrl', ['$scope', 'students', function ($scope, students) 
   };
 }]);
 
+sms.controller('ReportModalCtrl', ['$scope', '$modal', 'students', function ($scope, $modal, students) {
+  $scope.animationsEnabled = true;
+
+  $scope.open = function (size, student) {
+    $scope.hearts = students.getHearts(student.$id);
+    $scope.student = student
+
+    $scope.hearts.$loaded(function() {
+      var modalInstance = $modal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: 'reportModal.html',
+        controller: 'ReportModalInstanceCtrl',
+        size: size,
+        resolve: {
+          student: function () {
+            return $scope.student;
+          },
+          hearts: function () {
+            return $scope.hearts;
+          }
+        }
+      });
+    });
+  };
+
+  $scope.toggleAnimation = function () {
+    $scope.animationsEnabled = !$scope.animationsEnabled;
+  };
+
+}]);
+
+sms.controller('ReportModalInstanceCtrl', ['$scope', '$modalInstance', 'student', 'students','hearts', function ($scope, $modalInstance, student, students, hearts) {
+  $scope.hearts = hearts;
+  $scope.student = student;
+  $scope.range = 31;
+
+  $scope.setRange = function(range){
+    $scope.range = range;
+    $scope.lineData.labels = new Array(range);
+  };
+
+  //TODO: Insert a class average, and a series showing team point
+  $scope.lineData = {
+    labels: new Array(31),
+    series: [
+      {
+    		name: 'dummy data',
+        data: [1,4,2,5]
+      }
+    ],
+    showArea: true
+  };
+
+  $scope.events = {
+
+  };
+
+  $scope.lineOptions = {
+    axisX: {
+      labelInterpolationFnc: function(value) {
+        return value;
+      }
+    },
+    low: 0,
+		showArea: true
+  };
+}]);
+
 sms.controller('staffCtrl', ['$scope', '$http', '$filter', 'students', function($scope, $http, $filter, students) {
 	$scope.students = students.getStudents();
+
 	$scope.ordering = '';
 
 	$scope.mentor = '';
 
 	$scope.setOrder = function(order){
+		//It's a fool's errand trying to follow this. Just understand it allows for
+		//the ordering to flow through 3 states of on, on-reverse, off
 		if($scope.ordering === order){
 			if($scope.ordering.charAt(0) !== '-'){
 				$scope.ordering = '-' + $scope.ordering;
-			} else{
-				$scope.ordering = '';
 			}
 		} else{
-			$scope.ordering = order;
+			if($scope.ordering === '-' + order){
+				$scope.ordering = '';
+			} else{
+				$scope.ordering = order;
+			}
+
 		}
 	};
 
 	$scope.setMentor = function(mentor){
 		$scope.mentor = mentor
 	};
-
+	//TODO: Refactor this to allow switching between mentor filters
 	$scope.$watch('mentor', function(newValue, oldValue) {
 		if(newValue !== ''){
 			$scope.students = $filter('filter')($scope.students, {mentor:$scope.mentor});
 		} else{
 			$scope.students = students.getStudents();
 		}
-
 	});
 }]);
 

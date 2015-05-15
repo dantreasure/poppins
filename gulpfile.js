@@ -45,6 +45,10 @@ gulp.task('styles', function() {
     .pipe(notify({ message: 'Styles task complete' }));
 });
 
+gulp.task('chartist', function(){
+    gulp.src('node_modules/angular-chartist.js/dist/angular-chartist.min.js').pipe(gulp.dest('dist/js'))
+});
+
 gulp.task('scripts', function() {
   return gulp.src(['src/js/app.js', 'src/js/**/*.js'])
     .pipe(plumber())
@@ -71,7 +75,7 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task('default', ['clean'], function() {
-    gulp.start('html', 'styles', 'scripts', 'images', 'fonts');
+    gulp.start('html', 'styles', 'scripts', 'images', 'fonts', 'chartist');
 });
 
 gulp.task('watch', function() {

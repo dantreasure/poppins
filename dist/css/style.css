@@ -26,5 +26,17 @@ img.profile {
   font-size: 100%;
   float: right; }
 
+.title {
+  float: left;
+  display: inline-block; }
+
+.filters {
+  float: right;
+  margin-top: 20px;
+  margin-bottom: 10px; }
+
 .rating-container i {
   color: #ff4136; }
+
+.mentor-selection li {
+  cursor: pointer; }

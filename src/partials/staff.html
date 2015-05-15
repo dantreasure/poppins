@@ -1,22 +1,28 @@
 <div class="nav-staff container">
-	<h1>staff</h1>
-	<div class="btn-group btn-group" style="float: right">
-	  <a href="#" class="btn btn-default">Health</a>
-	  <a href="#" class="btn btn-default">Last Updated</a>
-	  <div class="btn-group">
-      <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-        Mentor
-        <span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu">
-        <li><a href="#">Dropdown link</a></li>
-        <li><a href="#">Dropdown link</a></li>
-        <li><a href="#">Dropdown link</a></li>
-       </ul>
-    </div>
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-9">
+			<h1 class="title">staff</h1>
+			<div class="btn-group btn-group filters">
+			  <a ng-click="setOrder('current_heart.value')" class="btn btn-default" ng-class="{ 'btn-primary': ordering === 'current_heart.value', 'btn-info': ordering === '-current_heart.value' }">Health</a>
+			  <a ng-click="setOrder('current_heart.logged')" class="btn btn-default" ng-class="{ 'btn-primary': ordering === 'current_heart.logged', 'btn-info': ordering === '-current_heart.logged' }">Last Updated</a>
+			  <div class="btn-group">
+		      <a class="btn btn-default dropdown-toggle" ng-class="{ 'btn-primary': mentor !== '' }" data-toggle="dropdown">
+		        {{mentor || 'Mentor'}}
+		        <span class="caret"></span>
+		      </a>
+		      <ul class="dropdown-menu mentor-selection">
+		        <li><a ng-click="setMentor('Lia')">Lia</a></li>
+		        <li><a ng-click="setMentor('Alex')">Alex</a></li>
+		        <li><a ng-click="setMentor('Rachel')">Rachel</a></li>
+		        <hr />
+		        <li><a ng-click="setMentor('')">Clear</a></li>
+		       </ul>
+		    </div>
+			</div>
+		</div>
 	</div>
 	<div class="row">
-		<div class="col-lg-3 col-md-6 col-sm-9" ng-repeat="student in students | limitTo:3 | orderBy: 'current_heart.value'">
+		<div class="col-lg-3 col-md-6 col-sm-9" ng-repeat="student in students | orderBy: ordering | filter: filtering">
 			<div class="panel" ng-class="{ 'panel-danger' : student.current_heart.value == 1, 'panel-warning': student.current_heart.value == 2, 'panel-primary': student.current_heart.value == 3, 'panel-success': student.current_heart.value > 3}">
 			  <div class="panel-heading">
 			    <h3 class="panel-title" ng-bind="student.full_name"></h3>
@@ -38,7 +44,6 @@
 			  </div>
 			</div>
 		</div>
-
 	</div>
 
 </div>

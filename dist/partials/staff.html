@@ -1,23 +1,40 @@
 <div class="nav-staff container">
 	<h1>staff</h1>
+	<div class="btn-group btn-group" style="float: right">
+	  <a href="#" class="btn btn-default">Health</a>
+	  <a href="#" class="btn btn-default">Last Updated</a>
+	  <div class="btn-group">
+      <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        Mentor
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="#">Dropdown link</a></li>
+        <li><a href="#">Dropdown link</a></li>
+        <li><a href="#">Dropdown link</a></li>
+       </ul>
+    </div>
+	</div>
 	<div class="row">
-		<div class="col-lg-3 col-md-6 col-sm-9" ng-repeat="student in students">
-			<div class="panel panel-primary">
+		<div class="col-lg-3 col-md-6 col-sm-9" ng-repeat="student in students | limitTo:3 | orderBy: 'current_heart.value'">
+			<div class="panel" ng-class="{ 'panel-danger' : student.current_heart.value == 1, 'panel-warning': student.current_heart.value == 2, 'panel-primary': student.current_heart.value == 3, 'panel-success': student.current_heart.value > 3}">
 			  <div class="panel-heading">
 			    <h3 class="panel-title" ng-bind="student.full_name"></h3>
 			    <span class="label label-default" ng-bind="student.mentor"></span>
 			  </div>
 			  <div class="panel-body">
-			    <section class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-			    	<img class="profile" src="{{student.avatar}}" alt="" width="72" height="72">
-			    </section>
-			    <section class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-						<div ng-controller="RatingCtrl" class="rating-container">
-					    <rating ng-model="student.current_heart.value" max="5" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="onLeave()" state-on="'glyphicon-heart'" state-off="'glyphicon-heart-empty'" ng-click="logRating(student)"></rating>
-						</div>
-						<p style="margin-bottom: 0px">Logged: {{student.current_heart.logged | date:'MMM d'}}</p>
-						<a class="btn btn-default btn-sm btn-block">Log</a>
-			    </section>
+				  <div class="row">
+				    <section class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+				    	<img class="profile" src="{{student.avatar}}" alt="" width="72" height="72">
+				    </section>
+				    <section class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+							<div ng-controller="RatingCtrl" class="rating-container">
+						    <rating ng-model="student.current_heart.value" max="5" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="onLeave()" state-on="'glyphicon-heart'" state-off="'glyphicon-heart-empty'" ng-click="logRating(student)"></rating>
+							</div>
+							<p style="margin-bottom: 0px">Logged: {{student.current_heart.logged | date:'MMM d'}}</p>
+							<a class="btn btn-default btn-sm btn-block">REPORT</a>
+				    </section>
+			    </div>
 			  </div>
 			</div>
 		</div>

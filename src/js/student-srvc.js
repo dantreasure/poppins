@@ -10,7 +10,13 @@ sms.factory("students", ["$firebaseArray", "$firebaseObject",
     students.getHearts = function(refrnc){
     	var studentRef = new Firebase("https://student-management.firebaseio.com/" + refrnc + "/hearts")
     	var studentHearts = $firebaseArray(studentRef);
-    	return studentHearts
+    	return studentHearts;
+    };
+
+    students.getLogs = function(refrnc){
+        var studentRef = new Firebase("https://student-management.firebaseio.com/" + refrnc + "/log")
+        var studentLogs = $firebaseArray(studentRef);
+        return studentLogs;
     };
 
     students.logHeart = function(refrnc, heartData){

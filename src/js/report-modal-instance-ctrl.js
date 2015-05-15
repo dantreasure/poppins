@@ -1,7 +1,25 @@
-sms.controller('ReportModalInstanceCtrl', ['$scope', '$modalInstance', 'student', 'students','hearts', function ($scope, $modalInstance, student, students, hearts) {
+sms.controller('ReportModalInstanceCtrl', ['$scope', '$modalInstance', 'student', 'students','hearts', 'logs', function ($scope, $modalInstance, student, students, hearts, logs) {
   $scope.hearts = hearts;
+  $scope.logs = logs;
   $scope.student = student;
-  $scope.range = 31;
+  $scope.range = 7;
+  $scope.newLog = {
+    body: '',
+    author: 'Mary'
+  };
+
+  $scope.addLog = function(){
+    $scope.newLog.created = Date.now();
+    $scope.logs.$add($scope.newLog);
+    $scope.cancelLog();
+  };
+
+  $scope.cancelLog = function(){
+    $scope.newLog = {
+      body: '',
+      author: 'Mary'
+    };
+  };
 
   $scope.setRange = function(range){
     $scope.range = range;
@@ -10,7 +28,7 @@ sms.controller('ReportModalInstanceCtrl', ['$scope', '$modalInstance', 'student'
 
   //TODO: Insert a class average, and a series showing team point
   $scope.lineData = {
-    labels: new Array(31),
+    labels: new Array(7),
     series: [
       {
     		name: 'dummy data',
@@ -31,6 +49,8 @@ sms.controller('ReportModalInstanceCtrl', ['$scope', '$modalInstance', 'student'
       }
     },
     low: 0,
-		showArea: true
+		showArea: true,
+    width: '100%',
+    height: '50%'
   };
 }]);

@@ -18,7 +18,7 @@ sms.controller('adminCtrl', ['$scope', 'students', function($scope, students) {
       current_city: $scope.newStudent.current_city,
       email: $scope.newStudent.email,
       notes: $scope.newStudent.notes,
-      log: [{'created': Date.now(), 'body': 'Student added to Poppins.', 'author': 'Mary &#10163;'}],
+      log: [{'created': Date.now(), 'body': 'Student added to Poppins.', 'author': 'Mary'}],
       hearts: [{'logged': Date.now(), 'value': 3, 'author': 'Mary &#10163;'}]
     });
 

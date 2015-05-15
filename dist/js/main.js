@@ -55,7 +55,7 @@ sms.controller('adminCtrl', ['$scope', 'students', function($scope, students) {
       current_city: $scope.newStudent.current_city,
       email: $scope.newStudent.email,
       notes: $scope.newStudent.notes,
-      log: [{'created': Date.now(), 'body': 'Student added to Poppins.', 'author': 'Mary &#10163;'}],
+      log: [{'created': Date.now(), 'body': 'Student added to Poppins.', 'author': 'Mary'}],
       hearts: [{'logged': Date.now(), 'value': 3, 'author': 'Mary &#10163;'}]
     });
 
@@ -168,22 +168,29 @@ sms.controller('ReportModalCtrl', ['$scope', '$modal', 'students', function ($sc
 
   $scope.open = function (size, student) {
     $scope.hearts = students.getHearts(student.$id);
+    $scope.logs = students.getLogs(student.$id);
     $scope.student = student
 
     $scope.hearts.$loaded(function() {
-      var modalInstance = $modal.open({
-        animation: $scope.animationsEnabled,
-        templateUrl: 'reportModal.html',
-        controller: 'ReportModalInstanceCtrl',
-        size: size,
-        resolve: {
-          student: function () {
-            return $scope.student;
-          },
-          hearts: function () {
-            return $scope.hearts;
+      $scope.logs.$loaded(function() {
+        console.log($scope.logs)
+        var modalInstance = $modal.open({
+          animation: $scope.animationsEnabled,
+          templateUrl: 'reportModal.html',
+          controller: 'ReportModalInstanceCtrl',
+          size: size,
+          resolve: {
+            student: function () {
+              return $scope.student;
+            },
+            hearts: function () {
+              return $scope.hearts;
+            },
+            logs: function () {
+              return $scope.logs;
+            }
           }
-        }
+        });
       });
     });
   };
@@ -194,10 +201,28 @@ sms.controller('ReportModalCtrl', ['$scope', '$modal', 'students', function ($sc
 
 }]);
 
-sms.controller('ReportModalInstanceCtrl', ['$scope', '$modalInstance', 'student', 'students','hearts', function ($scope, $modalInstance, student, students, hearts) {
+sms.controller('ReportModalInstanceCtrl', ['$scope', '$modalInstance', 'student', 'students','hearts', 'logs', function ($scope, $modalInstance, student, students, hearts, logs) {
   $scope.hearts = hearts;
+  $scope.logs = logs;
   $scope.student = student;
-  $scope.range = 31;
+  $scope.range = 7;
+  $scope.newLog = {
+    body: '',
+    author: 'Mary'
+  };
+
+  $scope.addLog = function(){
+    $scope.newLog.created = Date.now();
+    $scope.logs.$add($scope.newLog);
+    $scope.cancelLog();
+  };
+
+  $scope.cancelLog = function(){
+    $scope.newLog = {
+      body: '',
+      author: 'Mary'
+    };
+  };
 
   $scope.setRange = function(range){
     $scope.range = range;
@@ -206,7 +231,7 @@ sms.controller('ReportModalInstanceCtrl', ['$scope', '$modalInstance', 'student'
 
   //TODO: Insert a class average, and a series showing team point
   $scope.lineData = {
-    labels: new Array(31),
+    labels: new Array(7),
     series: [
       {
     		name: 'dummy data',
@@ -227,9 +252,17 @@ sms.controller('ReportModalInstanceCtrl', ['$scope', '$modalInstance', 'student'
       }
     },
     low: 0,
-		showArea: true
+		showArea: true,
+    width: '100%',
+    height: '50%'
   };
 }]);
+
+sms.filter('reverse', function() {
+  return function(items) {
+    return items.slice().reverse();
+  };
+});
 
 sms.controller('staffCtrl', ['$scope', '$http', '$filter', 'students', function($scope, $http, $filter, students) {
 	$scope.students = students.getStudents();
@@ -280,7 +313,13 @@ sms.factory("students", ["$firebaseArray", "$firebaseObject",
     students.getHearts = function(refrnc){
     	var studentRef = new Firebase("https://student-management.firebaseio.com/" + refrnc + "/hearts")
     	var studentHearts = $firebaseArray(studentRef);
-    	return studentHearts
+    	return studentHearts;
+    };
+
+    students.getLogs = function(refrnc){
+        var studentRef = new Firebase("https://student-management.firebaseio.com/" + refrnc + "/log")
+        var studentLogs = $firebaseArray(studentRef);
+        return studentLogs;
     };
 
     students.logHeart = function(refrnc, heartData){

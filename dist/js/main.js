@@ -361,7 +361,7 @@ sms.controller('WelcomeModalCtrl', ['$scope', '$modal', '$cookies', function ($s
   $scope.animationsEnabled = true;
 
   var welcomeCookie = $cookies.welcomed;
-  // welcomeCookie = false;
+
   if (welcomeCookie === false){
     var modalInstance = $modal.open({
       animation: $scope.animationsEnabled,

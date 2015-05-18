@@ -3,6 +3,16 @@ sms.controller('adminCtrl', ['$scope', 'students', 'poppins', function($scope, s
   $scope.poppins = poppins;
 
   $scope.newChallenge = '';
+  $scope.newQuestion = '';
+
+  $scope.cancelQuestion = function(){
+    $scope.newQuestion = '';
+  };
+
+  $scope.submitQuestion = function () {
+    $scope.poppins.saveQuestion($scope.newQuestion);
+    $scope.cancelQuestion();
+  };
 
   $scope.cancelChallenge = function(){
     $scope.newChallenge = '';

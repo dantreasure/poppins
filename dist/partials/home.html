@@ -1,9 +1,9 @@
 <div class="nav-home container">
 	<div class="row">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 			<div class="jumbotron">
-			  <h3>Daily Code Challenge</h3>
-			  <p ng-bind="dailyChallenge.question"></p>
+			  <h3>Code Challenge</h3>
+			  <p ng-bind="challenge.question"></p>
 			  <div class="form-horizontal">
 			  	<fieldset>
 			  		<div class="form-group">
@@ -23,6 +23,18 @@
 			  </div>
 			</div>
 		</div>
+
+		<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+			<div class="jumbotron">
+			  <h3>Interview Question</h3>
+			  <p ng-bind="interviewQuestion.question"></p>
+			  <section ng-show="interviewQuestion.answer.show">
+			  	<h3>Answer</h3>
+			  	<p ng-bind="interviewQuestion.answer"></p>
+			  </section>
+			</div>
+		</div>
+
 	</div>
 	<div ng-controller="WelcomeModalCtrl">
     <script type="text/ng-template" id="welcomeModal.html">

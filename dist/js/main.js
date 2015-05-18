@@ -46,8 +46,7 @@ sms.controller('adminCtrl', ['$scope', 'students', 'poppins', function($scope, s
   };
 
   $scope.submitChallenge = function () {
-    $scope.poppins.dailyChallenge.question = $scope.newChallenge;
-    $scope.poppins.$save;
+    $scope.poppins.saveChallenge($scope.newChallenge);
     $scope.cancelChallenge();
   };
 
@@ -104,7 +103,14 @@ sms.controller('directoryCtrl', ['$scope', function($scope) {
 }]);
 
 sms.controller('homeCtrl', ['$scope', 'poppins', function($scope, poppins) {
-	$scope.poppins = poppins;
+	$scope.dailyChallenge = poppins.getChallenge();
+	$scope.challengeSubmission = {};
+
+	$scope.submitAnswer = function(){
+		poppins.saveAnswer($scope.challengeSubmission);
+		$scope.challengeSubmission = {};
+	}
+
 }]);
 
 sms.controller('indexCtrl', ['$scope', '$location', function($scope) {
@@ -151,11 +157,29 @@ sms.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'student', 'stu
   };
 }]);
 
-sms.factory("poppins", ["$firebaseObject",
-  function($firebaseObject) {
-    var ref = new Firebase("https://poppins.firebaseio.com/");
+sms.factory("poppins", ["$firebaseObject", "$firebaseArray",
+  function($firebaseObject, $firebaseArray) {
+    var challengeRef = new Firebase("https://poppins.firebaseio.com/dailyChallenge");
+  	var challenge = $firebaseObject(challengeRef);
 
-    return $firebaseObject(ref);
+    var poppins = {};
+
+    poppins.getChallenge = function(){
+    	return challenge
+    };
+
+    poppins.saveChallenge = function(question){
+    	challenge.question = question;
+    	challenge.$save();
+    };
+
+    poppins.saveAnswer = function(answer){
+    	var answersRef = new Firebase("https://poppins.firebaseio.com/dailyChallenge/answers");
+    	var answers = $firebaseArray(answersRef);
+    	answers.$add(answer);
+    }
+
+    return poppins;
 
 }]);
 
@@ -380,6 +404,7 @@ sms.controller('WelcomeModalCtrl', ['$scope', '$modal', '$cookies', function ($s
 sms.controller('WelcomeModalInstanceCtrl', ['$scope', '$modalInstance', '$cookies', function ($scope, $modalInstance, $cookies) {
 	$scope.close = function(){
 		$cookies.welcomed = true;
+
 		$modalInstance.close();
 	};
 }]);

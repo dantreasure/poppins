@@ -9,8 +9,7 @@ sms.controller('adminCtrl', ['$scope', 'students', 'poppins', function($scope, s
   };
 
   $scope.submitChallenge = function () {
-    $scope.poppins.dailyChallenge.question = $scope.newChallenge;
-    $scope.poppins.$save;
+    $scope.poppins.saveChallenge($scope.newChallenge);
     $scope.cancelChallenge();
   };
 

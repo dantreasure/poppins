@@ -1,4 +1,4 @@
-### To run:
+### To run Poppins:
 
 - ```npm install```
 - ```gulp```
